@@ -2,64 +2,47 @@ class Solution {
   public:
   
     void merge(vector<int>& arr, int l, int r){
-        int mid = l + (r - l)/2;
-        int len1 = mid - l + 1;
-        int len2 = r - mid;
-        
-        int *first = new int[len1];
-        int *second = new int[len2];
-        
-        int k = l;
-        
-        for(int i = 0; i < len1 ; i++){
-            first[i] = arr[k++];
-        }
-        
-        k = mid + 1;
-        
-        for(int i = 0; i < len2 ; i++){
-            second[i] = arr[k++];
-        }
-        
-        int i = 0 ;
-        int j = 0 ;
-        int index = l;
-        while(i < len1 && j < len2){
-            if(first[i] > second[j]){
-                arr[index++] = second[j++];
+        int total = r - l + 1;
+        int gap = (total + 1 )/2;
+        while(gap > 0){
+            int i = l;
+            int j = l + gap;
+            while(j <= r){
+                if(arr[i] > arr[j]){
+                    swap(arr[i] , arr[j]);
+                }
+                i++;
+                j++;
+                
+            }
+            if(gap == 1){
+                gap = 0;
             }
             else{
-                arr[index++] = first[i++];
+                gap = (gap + 1 )/ 2;
             }
-        }
-        while(i < len1){
-            arr[index++] = first[i++];
             
         }
-        while(j < len2){
-            arr[index++] = second[j++];
-        }
-        
-        delete[] first;
-        delete[] second;
     }
   
     void mergeSort(vector<int>& arr, int l, int r) {
-    
-    int mid = l + (r - l)/2;
-    // Base Case 
-    if(l >= r){
-        return;
-    }
-    
-    // left part 
-    mergeSort(arr , l , mid);
-    
-    // right part
-    mergeSort(arr , mid + 1 , r);
-    
-    // merge sort array
-    merge(arr , l , r);
+        int n = arr.size();
+        // Base Case 
+        if(l >= r){
+            return;
+        }
+        
+        int mid = l + (r - l)/2;
+        
+        // left part 
+        mergeSort(arr , l , mid);
+        
+        // Right part
+        mergeSort(arr , mid + 1 , r);
+        
+        // Merge Array
+        merge(arr , l , r);
+        
         
     }
 };
