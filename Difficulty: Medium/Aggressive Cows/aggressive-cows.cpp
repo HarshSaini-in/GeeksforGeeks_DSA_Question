@@ -1,35 +1,29 @@
 class Solution {
   public:
   
-    bool Is_Possible(vector<int> &arr, int k , int mid){
-        int Cow = 1;
-        int position = arr[0];
-        for (int i = 0 ; i < arr.size() ; i++){
-            if(arr[i] - position >= mid){
-                
-                Cow++;
-                if(Cow == k){
+    bool Is_possible(vector<int> &arr, int k ,int mid , int n){
+        int Count_cow = 1;
+        int position_cow = arr[0];
+        for(int i = 1; i < n ; i++ ){
+            if(arr[i] - position_cow >= mid){
+                Count_cow++;
+                if(k == Count_cow){
                     return true;
                 }
-                position = arr[i];
+                position_cow = arr[i];
             }
         }
         return false;
-    }
-     
-    
+    } 
+  
     int Binary(vector<int> &arr, int k){
-        sort(arr.begin(),arr.end());
-        int start = 0 ;
-        int maxi = -1;
-        for (int i = 0 ; i < arr.size() ; i++){
-            maxi = max(maxi , arr[i]);
-        }
-        int end = maxi;
-        int ans = -1;
+        int n = arr.size();
+        int start = 0;
+        int end = arr[n-1];
         int mid = start + (end - start)/2;
+        int ans = 0;
         while(start <= end){
-            if(Is_Possible(arr , k , mid)){
+            if(Is_possible(arr , k , mid , n)){
                 ans = mid;
                 start = mid + 1;
             }
@@ -39,13 +33,10 @@ class Solution {
             mid = start + (end - start)/2;
         }
         return ans ;
-        
-        
     }
-  
-  
     int aggressiveCows(vector<int> &arr, int k) {
-        if(arr.size() < k){
+        sort(arr.begin() , arr.end());
+        if(k > arr.size()){
             return -1;
         }
         return Binary(arr , k);
