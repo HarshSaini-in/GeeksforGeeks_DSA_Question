@@ -13,22 +13,17 @@ class Node {
 class Solution {
   public:
     int getMiddle(Node* head) {
-        Node* temp = head;
-        int cnt = 1;
-        while(temp -> next != NULL){
-            temp = temp -> next;
-            cnt++;
+        Node* fast = head -> next;
+        Node* slow = head;
+        
+        while(fast != NULL){
+            fast = fast -> next;
+            if(fast != NULL){
+                fast = fast -> next;
+            }
+            slow = slow -> next;
         }
-        // if(cnt % 2 != 0){
-        //     cnt++;
-        // }
-        Node* temp1 = head;
-        int n = 1;
-        while(n <= cnt/2){
-            n++;
-            temp1 = temp1 -> next;
-        }
-        return temp1 -> data;
+        return slow -> data;
         
     }
 };
